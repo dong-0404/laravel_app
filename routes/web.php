@@ -12,3 +12,5 @@ Route::middleware('auth')->group(function() {
     Route::get('admin/main', [MainController::class, 'index']);
 
 });
+//Route::get('/users', [LoginController::class, 'login']);
+
