@@ -14,3 +14,9 @@ Route::middleware('auth')->group(function() {
 });
 //Route::get('/users', [LoginController::class, 'login']);
 
+Route::get('/admin/users/create', [UserController::class, 'create']);
+Route::post('/admin/users/create', [UserController::class, 'store']);
+// Update user
+// Nhớ là phải truyền thêm id để biết được đối tượng muốn sửa nhé
+Route::get('/admin/users/update/{id}', [UserController::class, 'edit']);
+Route::post('/admin/users/update/{id}', [UserController::class, 'update']);
