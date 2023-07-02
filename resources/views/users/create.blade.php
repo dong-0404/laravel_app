@@ -8,7 +8,7 @@
 </head>
 <body>
 <h2>Create user</h2>
-<form action="/users/create" method="post">
+<form action="/admin/users/create" method="post">
     @csrf
     <label for="Name">
         Name:

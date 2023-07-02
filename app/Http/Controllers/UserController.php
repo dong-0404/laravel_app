@@ -13,15 +13,49 @@ class UserController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-    public function testAbc()
+    public function index()
     {
 //        dd(12);
-        return $this->userRepository->getAll();
-        dd('return');
+        $user = $this->userRepository->getAll();
+//        dd('return');
+        return response()->json($user);
     }
-    public function findUser($id)
+    public function show($id)
     {
-        return $this->userRepository->find($id);
-        dd('return');
+        $user = $this->userRepository->find($id);
+        if($user)
+        {
+            return response()->json($user);
+        }
+        return response()->json(['message' => 'User not found'], 404);
+    }
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $user = $this->userRepository->create($data);
+        return response()->json($user,201);
+    }
+    public function edit($id)
+    {
+        $user = $this->userRepository->find($id);
+        return response()->json($user);
+    }
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $user = $this->userRepository->update($id, $data);
+        if($user) {
+            return response()->json($user);
+        }
+        return response()->json(['message' => 'User not found'], 404);
+    }
+    public function destroy($id)
+    {
+        $result = $this->userRepository->delete($id);
+        if($result)
+        {
+            return response()->json(['message' => 'user deleted']);
+        }
+        return response()->json(['message' => 'user not found'], 404);
     }
 }
