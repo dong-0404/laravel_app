@@ -22,10 +22,23 @@ class UserRepository extends EloquentRepository
      */
     public function test()
     {
-        return $this->_model->getAll()->get();
+        return $this->_model->all();
     }
     public function Find($id)
     {
         return $this->_model->find($id);
+    }
+    public function filerUser($email, $name)
+    {
+        $query = $this->_model->select();
+        if($email)
+        {
+             $query->where(User::_EMAIL, 'like', '%'.$email.'%');
+        }
+        if($name)
+        {
+            $query->where(User::_NAME, 'like', '%'.$name.'%');
+        }
+        return $query->get();
     }
 }

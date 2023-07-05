@@ -17,10 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    const _NAME = 'name';
+    const _EMAIL = 'email';
+    const _PASSWORD ='password';
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        self::_NAME,
+        self::_EMAIL,
+        self::_PASSWORD,
     ];
 
     /**
