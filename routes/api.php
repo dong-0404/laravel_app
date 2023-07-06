@@ -15,4 +15,12 @@ Route::get('Customer','App\Http\Controllers\CustomerController@index');
 Route::get('Customer/show','App\Http\Controllers\CustomerController@findCustomer');
 Route::post('Customers', 'App\Http\Controllers\CustomerController@store');
 Route::get('editCustomer/{id}', 'App\Http\Controllers\UserController@edit');
-Route::delete('deleteCustomer/{id}','App\Http\Controllers\CustphpController@deleted');
+Route::delete('deleteCustomer/{id}','App\Http\Controllers\CusomerphpController@deleted');
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function($route) {
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+});
