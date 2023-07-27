@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 //use Illuminate\Auth\AuthenticationException;
 //use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-<<<<<<< HEAD
-=======
-use Illuminate\Http\Request;
->>>>>>> 5b6bf8e (sửa lại những code bị xoá)
+
+
+//use Illuminate\Http\Request;
+
 //use Throwable;
 
 class Handler extends ExceptionHandler
@@ -65,19 +65,12 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-<<<<<<< HEAD
+
             $this->renderable(function (CustomException $e, Request $request) {
                 return response()->json([
                     'message' => $e->getMessage()
                 ], $e->getCode());
             });
-=======
-        $this->renderable(function (CustomException $e, Request $request) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], $e->getCode());
-        });
->>>>>>> 5b6bf8e (sửa lại những code bị xoá)
     }
 
 }
