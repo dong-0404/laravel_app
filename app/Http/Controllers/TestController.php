@@ -28,7 +28,7 @@ class TestController extends Controller
 
     protected function makeSomethingRisky()
     {
-        throw TestException::internalException();
+        throw TestException::checkError();
 
     }
 }

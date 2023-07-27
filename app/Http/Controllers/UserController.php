@@ -9,6 +9,7 @@ class UserController extends Controller
 {
 
     public $userRepository;
+
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
