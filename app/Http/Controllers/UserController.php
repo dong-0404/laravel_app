@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
 //        dd(12);
-        $user = $this->userRepository->test();
+        $user = $this->userRepository->getAll();
 //        dd('return');
         return response()->json($user);
     }
@@ -36,16 +36,16 @@ class UserController extends Controller
         $id = $request->input('id');
         $name = $request->input('name');
         $email = $request->input('email');
-        $password = $request->input('password');
+        // $password = $request->input('password');
 
         $data = [
             'name' => $name,
             'email' => $email,
-            'password' => $password,
+            // 'password' => $password,
         ];
 
         if ($id) {
-             $this->userRepository->update($id, $data);
+             $user = $this->userRepository->update($id, $data);
             goto next;
         }
 
@@ -59,15 +59,15 @@ class UserController extends Controller
         $user = $this->userRepository->find($id);
         return response()->json($user);
     }
-//    public function update(Request $request, $id)
-//    {
-//        $data = $request->all();
-//        $user = $this->userRepository->update($id, $data);
-//        if($user) {
-//            return response()->json($user);
-//        }
-//        return response()->json(['message' => 'User not found'], 404);
-//    }
+   public function update(Request $request, $id)
+   {
+       $data = $request->all();
+       $user = $this->userRepository->update($id, $data);
+       if($user) {
+           return response()->json($user);
+       }
+       return response()->json(['message' => 'User not found'], 404);
+   }
     public function destroy($id)
     {
         $result = $this->userRepository->delete($id);

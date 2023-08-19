@@ -9,10 +9,11 @@ class UserRole extends Model
 {
     use HasFactory;
     const _USER_ID = 'user_id';
-    const _ROLE_ID = 'role_id';
+    const _ROLES_ID = 'roles_id';
 
     protected $fillable = [
         self::_USER_ID,
-        self::_ROLE_ID,
-    ];omer
+        self::_ROLES_ID,
+    ];
+
 }

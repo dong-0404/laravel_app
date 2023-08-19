@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,9 @@ class Roles extends Model
          self::_NAME,
          self::_DESCRIPTION
      ];
+     public function user()
+     {
+         return $this->belongsToMany(User::class,'user_roles');
+     }
 
 }

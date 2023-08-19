@@ -20,7 +20,7 @@ class UserRepository extends EloquentRepository
      * Get 5 posts hot in a month the last
      * @return mixed
      */
-    public function test()
+    public function getAll()
     {
         return $this->_model->all();
     }

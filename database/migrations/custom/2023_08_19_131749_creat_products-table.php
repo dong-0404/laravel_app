@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable()->default(null);
+            $table->unsignedBigInteger('category_id');
+            $table->string('image')->nullable();
+            $table->text('description')->nullable();
+            $table->decimal('price', 10, 2);
             $table->timestamps();
+
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        //
     }
 };
