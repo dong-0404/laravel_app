@@ -37,6 +37,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
+        // $data['user_id'] = auth()->user()->id;
         $order = $this->orderRepository->updateOrder($id, $data);
         return response()->json($order, 200);
     }

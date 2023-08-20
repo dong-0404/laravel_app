@@ -21,8 +21,7 @@ class CheckRole
         $user = auth()->user();
 //        dd($user);
         $roleName = $user->role->first()->name;
-//        dd($roleName);
-
+    //    dd($roleName);
         if ($roleName === 'manager') {
             // Người dùng có role là "manager", cho phép truy cập
             return $next($request);
