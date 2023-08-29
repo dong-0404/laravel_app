@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
 
 class AuthController extends Controller
 {
-    public function __construct() {
+    public  $userRepository;
+    public function __construct(UserRepository $userRepository) {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
@@ -21,7 +24,8 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $ttl * 60, // Thời gian sống của token tính bằng giây
-            'user' => auth()->user()
+            'user' => auth()->user(),
+            'role_' => auth()->user()->role->first()->name
         ]);
     }
 
@@ -67,7 +71,36 @@ class AuthController extends Controller
     public function userProfile()
     {
         $user = auth()->user();
-        return response()->json($user);
+        if($user) {
+            $role_name = $user->role->first()->name;
+        }
+        return response()->json([
+            'user' => $user,
+            'role' => $role_name
+        ]);
     }
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $data = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if (!Hash::check($request->input('current_password'), $user->password)) {
+            return response()->json(['message' => 'Current password is incorrect'], 401);
+        }
+
+        if (strcmp($request->input('current_password'), $request->input('new_password')) === 0) {
+            return response()->json(['message' => 'New password must be different from current password'], 401);
+        }
+
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
 
 }

@@ -52,8 +52,6 @@ class ProductController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        // ... Upload image and other logic ...
-
         $product = $this->productRepository->update($id, $data);
 
         return response()->json($product, 200);

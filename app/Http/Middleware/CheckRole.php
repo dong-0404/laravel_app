@@ -33,8 +33,10 @@ class CheckRole
             } else {
                 abort(403, 'Unauthorized');
             }
+        } else {
+            abort(403, 'Unauthorized');
         }
-        abort(403, 'Unauthorized');
+//        return $response->header('X-user-Role', $roleName);
     }
 //    public function handle(Request $request, Closure $next)
 //    {

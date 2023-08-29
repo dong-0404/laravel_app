@@ -36,6 +36,10 @@ Route::group([
     Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
     Route::get('user-profile', [App\Http\Controllers\AuthController::class, 'userProfile'])->name('user-profile');
+    Route::post('updateUserProfile/{id}',[App\Http\Controllers\UserController::class, 'updateUserProfile']);
+    Route::post('/change-Password', [App\Http\Controllers\AuthController::class, 'changePassword']);
+
+
     // Route::get('/User', 'App\Http\Controllers\UserController@index')->middleware('check_role');
     // Route::post('/Order/Create','App\Http\Controllers\OrderController@store' )->middleware('check_role');
 });

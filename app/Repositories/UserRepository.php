@@ -31,13 +31,11 @@ class UserRepository extends EloquentRepository
     public function filerUser($email, $name)
     {
         $query = $this->_model->select();
-        if($email)
-        {
-             $query->where(User::_EMAIL, 'like', '%'.$email.'%');
+        if ($email) {
+            $query->where(User::_EMAIL, 'like', '%' . $email . '%');
         }
-        if($name)
-        {
-            $query->where(User::_NAME, 'like', '%'.$name.'%');
+        if ($name) {
+            $query->where(User::_NAME, 'like', '%' . $name . '%');
         }
         return $query->get();
     }
