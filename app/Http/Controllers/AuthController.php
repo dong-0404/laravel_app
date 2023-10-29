@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\ValidationException;
 
 
 class AuthController extends Controller
@@ -29,6 +28,9 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -79,14 +81,15 @@ class AuthController extends Controller
             'role' => $role_name
         ]);
     }
-    public function changePassword(Request $request)
+    public function update1(Request $request)
     {
         $user = auth()->user();
+//        $request->validate([
+//            'current_password' => 'required',
+//            'new_password' => 'required|string|min:6|confirmed',
+//        ]);
+//        dd(1);
 
-        $data = $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|string|min:6|confirmed',
-        ]);
 
         if (!Hash::check($request->input('current_password'), $user->password)) {
             return response()->json(['message' => 'Current password is incorrect'], 401);
@@ -99,8 +102,10 @@ class AuthController extends Controller
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        return response()->json(['message' => 'Password changed successfully'], 200);
+        return response()->json(['message' => 'Password changed successfully']);
     }
-
+//    public function update (Request $request) {
+//
+//    }
 
 }

@@ -1,21 +1,26 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Repositories\ServiceRepository;
 use Illuminate\Http\Request;
 use App\Repositories\OrderRepository;
 
 class OrderController extends Controller
 {
     private $orderRepository;
+    private $serviceRepository;
 
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(OrderRepository $orderRepository, ServiceRepository $serviceRepository)
     {
         $this->orderRepository = $orderRepository;
+        $this->serviceRepository= $serviceRepository;
     }
 
     public function index()
     {
-        $orders = $this->orderRepository->getAllOrders();
+        $item = $this->orderRepository->getAllOrdersWithDetails()->toArray();
+//        dd($item);
+        $orders = $this->serviceRepository->paginate($item, 5);
         return response()->json($orders);
     }
 
@@ -47,4 +52,17 @@ class OrderController extends Controller
         $this->orderRepository->deleteOrder($id);
         return response()->json(['message' => 'Deleted successfully'], 200);
     }
+
+    public function search(Request $request)
+    {
+        $orderId = $request->input('orderId');
+        $userId = $request->input('userId');
+        $customerId = $request->input('customerId');
+        if($orderId || $userId || $customerId) {
+        $results = $this->orderRepository->filterOrderItems($orderId, $userId, $customerId);
+            return response()->json($results);
+            }
+        return 0;
+    }
+
 }

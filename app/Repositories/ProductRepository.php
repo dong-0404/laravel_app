@@ -4,33 +4,21 @@ namespace App\Repositories;
 
 use App\Models\Product;
 
-class ProductRepository
+class ProductRepository extends EloquentRepository
 {
-    public function all()
+    public function getModel()
     {
-        return Product::all();
+        return Product::class;
     }
-
-    public function find($id)
-    {
-        return Product::findOrFail($id);
-    }
-
-    public function create(array $data)
-    {
-        return Product::create($data);
-    }
-
-    public function update($id, array $data)
-    {
-        $product = $this->find($id);
-        $product->update($data);
-        return $product;
-    }
-
     public function delete($id)
     {
         $product = $this->find($id);
         $product->delete();
     }
+    public function getProductsByCategoryId($categoryId)
+    {
+        $query = $this->_model->where('category_id', $categoryId);
+        return $query->get();
+    }
+
 }

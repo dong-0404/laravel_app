@@ -3,21 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\CustomerRepository;
+use App\Repositories\ServiceRepository;
 use http\Env\Response;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     private $customerRepository;
-    public function __construct(CustomerRepository $customerRepository)
+    private $serviceRepository;
+    public function __construct(CustomerRepository $customerRepository, ServiceRepository $serviceRepository)
     {
         $this->customerRepository = $customerRepository;
+        $this->serviceRepository = $serviceRepository;
     }
     public function index()
     {
-        //        dd(12);
-        $customer = $this->customerRepository->getAllCustomer();
-        //        dd('return');
+        $data = $this->customerRepository->getAllCustomer()->toArray();
+        $customer = $this->serviceRepository->paginate($data);
         return response()->json($customer);
     }
     public function findCustomer(Request $request)
