@@ -18,14 +18,4 @@ class CustomerRepository extends EloquentRepository
     {
         return $this->_model->find($id);
     }
-
-    public function getAndDeletedById($id)
-    {
-        $customer = $this->find($id);
-        if($customer){
-            $this->delete($id);
-            return true;
-        }
-        return false;
-    }
 }
