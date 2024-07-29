@@ -18,7 +18,4 @@ class CustomerRepository extends EloquentRepository
     {
         return $this->_model->find($id);
     }
-    public function getData() {
-
-    }
 }
